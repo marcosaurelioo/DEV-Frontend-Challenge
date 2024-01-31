@@ -13,15 +13,15 @@ The goal of this exercise is to showcase your frontend skillset by building the 
 To complete the challenge, please perform the following:
 
 1. Fork the repository to your personal github account.
-2. View the Figma design [here]()
-3. Create a mapping of the orders so a user could view their orders details. Only spend an hour on it, it's okay if it's not fully finished.
+2. View the Figma design [here](https://www.figma.com/file/DyE74I3fWWeZNZzu1RWyIq/Local-Line-Frontend-Dev-Evaluation?type=design&node-id=1%3A2742&mode=dev&t=0zNyFmCEtbI8moF9-1)
+3. Create a mapping of the orders so a user can view their orders details
 4. Once you've completed the work, push it to your forked repository, and submit a pull request to this repository. Please email us with a link to your pull request once completed.
 
 ## Evaluation Criteria
 
-1. Creation of React components and reusable patterns
+1. Creation of React components, reusable patterns and separation of concerns
 2. Attention to detail from the Figma Design
-3. Content generated from orders.json
+3. Orders are generated from orders.json
 4. Use of Tailwind CSS (optional)
 
 ## Running Locally
