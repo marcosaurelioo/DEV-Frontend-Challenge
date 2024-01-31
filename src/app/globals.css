@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl font-bold text-Grey800;
+  }
+  h2 {
+    @apply text-lg font-medium text-Grey800;
+  }
+  h3 {
+    @apply text-base font-medium text-Grey800;
+  }
+  h4 {
+    @apply text-sm font-medium text-Grey800;
+  }
+  p,
+  li,
+  span {
+    @apply text-sm font-normal text-Grey500;
+  }
+  p.error-text {
+    @apply text-Red700;
+  }
+
+  a {
+    @apply text-Green700;
+  }
+
+  button,
+  button:focus {
+    @apply outline-none relative;
+  }
+
+  label {
+    @apply text-xs text-Grey500;
+  }
+
+  input {
+    @apply p-2 text-Grey900 border-Grey200 border-2 rounded-sm;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    @apply text-Green700 border-Grey300 bg-White mr-3 w-4 h-4 cursor-pointer rounded outline-none
+    hover:border-Green700
+    focus:ring-Green700;
+  }
+
+  input[type='radio'] {
+    @apply rounded-2xl;
+  }
+
+  input[type='checkbox']:checked:hover,
+  input[type='checkbox']:checked:focus, 
+  input[type='radio']:checked:hover,
+  input[type='radio']:checked:focus {
+    @apply border-Green700 bg-Green700;
+  }
+
+  hr {
+    @apply w-full bg-Grey200;
+    height: 1px;
+  }
+
+  small {
+    @apply text-sm text-Grey400;
+  }
+
+  .disabled-grey {
+    @apply bg-Grey100 text-Grey400 pointer-events-none !cursor-not-allowed;
+  }
+}
