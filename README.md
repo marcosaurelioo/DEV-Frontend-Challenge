@@ -5,7 +5,6 @@
 The goal of this exercise is to showcase your frontend skillset by building the requirements below. This repository contains the following:
 
 - A /src/app/page.js that houses the app screen
-- An orders.json which contains mock dummy data for Orders
 - A package.json with a list of packages to install
 - A /components folder where reusable components should be imported from
 - A /src/app/globals.css which contains default element styles - please edit them as you see fit
@@ -23,7 +22,7 @@ To complete the challenge, please perform the following:
 
 1. Creation of React components, reusable patterns and separation of concerns
 2. Attention to detail from the Figma Design
-3. Orders are generated from orders.json
+3. Orders are generated from provided endpoint
 4. Use of Tailwind CSS (optional)
 
 ## Running Locally
