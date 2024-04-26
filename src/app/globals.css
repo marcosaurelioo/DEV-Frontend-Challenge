@@ -22,7 +22,7 @@ body {
 
 @layer base {
   h1 {
-    @apply text-3xl font-bold text-Grey800;
+    @apply text-base font-bold text-Grey800;
   }
   h2 {
     @apply text-lg font-medium text-Grey800;
@@ -33,17 +33,19 @@ body {
   h4 {
     @apply text-sm font-medium text-Grey800;
   }
-  p,
+  p {
+    @apply text-sm font-medium text-Grey800;
+  }
   li,
   span {
-    @apply text-sm font-normal text-Grey500;
+    @apply text-sm font-medium text-Grey500;
   }
   p.error-text {
     @apply text-Red700;
   }
 
   a {
-    @apply text-Green700;
+    @apply text-Green600 underline underline-offset-1 cursor-pointer;
   }
 
   button,
@@ -59,21 +61,21 @@ body {
     @apply p-2 text-Grey900 border-Grey200 border-2 rounded-sm;
   }
 
-  input[type='checkbox'],
-  input[type='radio'] {
+  input[type="checkbox"],
+  input[type="radio"] {
     @apply text-Green700 border-Grey300 bg-White mr-3 w-4 h-4 cursor-pointer rounded outline-none
     hover:border-Green700
     focus:ring-Green700;
   }
 
-  input[type='radio'] {
+  input[type="radio"] {
     @apply rounded-2xl;
   }
 
-  input[type='checkbox']:checked:hover,
-  input[type='checkbox']:checked:focus, 
-  input[type='radio']:checked:hover,
-  input[type='radio']:checked:focus {
+  input[type="checkbox"]:checked:hover,
+  input[type="checkbox"]:checked:focus,
+  input[type="radio"]:checked:hover,
+  input[type="radio"]:checked:focus {
     @apply border-Green700 bg-Green700;
   }
 

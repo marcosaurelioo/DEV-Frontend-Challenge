@@ -14,7 +14,7 @@ module.exports = {
         Grey000: "#FFFFFF",
         Grey50: "#F9FAFB",
         Grey100: "#F3F4F6",
-        Grey200: "#E5E7EB",
+        Grey200: "#F8FAFB",
         Grey300: "#D1D5DB",
         Grey400: "#9CA3AF",
         Grey500: "#6B7280",
@@ -22,6 +22,7 @@ module.exports = {
         Grey700: "#374151",
         Grey800: "#1F2937",
         Grey900: "#111827",
+        Grey1000: "#E5E7EB",
 
         Green50: "#F3F8F1",
         Green100: "#E3F0DD",
@@ -77,6 +78,12 @@ module.exports = {
         Blue700: "#0369A1",
         Blue800: "#075985",
         Blue900: "#0C4A6E",
+      },
+      backgroundImage: {
+        "particles-texture": "url('/particles-texture.png')",
+      },
+      boxShadow: {
+        "custom-shadow": "0px 4px 12px 0px #0000000D",
       },
     },
   },
