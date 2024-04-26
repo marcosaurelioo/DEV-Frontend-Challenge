@@ -1,9 +1,33 @@
-import Image from "next/image";
+"use client";
 
-import { OrderItem } from "../components/order-item";
+import { useState } from "react";
+import Image from "next/image";
+import moment from "moment";
+
+import { useFetchOrders } from "../hooks/useFetchOrders";
+
+import { OrderDescriptionWrapper } from "../components/order-description-wrapper";
 import { OrderPrice } from "../components/order-price";
+import { OrderItem } from "../components/order-item";
 
 export default function Home() {
+  const [noteValue, setNoteValue] = useState("");
+  const { data } = useFetchOrders();
+
+  const handleNoteSubmit = async () => {
+    try {
+      await fetch("https://vop4f76uc3.execute-api.us-east-1.amazonaws.com/", {
+        method: "PATCH",
+        body: JSON.stringify({
+          id: data.id,
+          customer_note: noteValue,
+        }),
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <main className="flex justify-center min-h-screen bg-Grey200 bg-particles-texture">
       <div className="w-full h-full sm:max-w-xl sm:py-10 py-6">
@@ -13,33 +37,28 @@ export default function Home() {
         </div>
 
         <div className="bg-white w-full h-full sm:border border-t border-Grey1000 sm:rounded-xl shadow-custom-shadow p-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-between items-center">
-              <h1>Order 1534 · Sunning Hill Farm</h1>
-
-              <div className="bg-Green100 w-14 rounded-lg text-center">
-                <span className="text-Green800">Open</span>
-              </div>
-            </div>
-
-            <span>Placed Tuesday, March 22 2022</span>
-          </div>
-
-          <div className="border border-Grey1000 border-dashed my-4" />
-
-          <div className="flex flex-col gap-3">
-            <OrderItem />
-          </div>
-
-          <OrderPrice />
-
           <div>
-            <div className="flex items-center gap-2">
-              <h4 className="whitespace-nowrap">Pickup · Toronto Central</h4>
-              <div className="h-px w-full bg-Grey1000" />
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="flex justify-between items-center gap-2">
+                <h1>Order {data?.id} · {data?.supplier?.business_name}</h1>
+                <div className="bg-Green100 w-14 rounded-lg text-center">
+                  <span className="text-Green800">
+                    {data?.status?.toLowerCase()}
+                  </span>
+                </div>
+              </div>
+              <span>Placed {moment(data.opened_at).format("dddd, MMMM D YYYY")}</span>
             </div>
 
-            <div className="flex flex-col gap-3 px-2 py-2">
+            <hr className="border-dashed" />
+
+            <div className="flex flex-col gap-3 max-h-80 overflow-y-auto pr-2 mt-4">
+              {data.orders.map((order) =>  <OrderItem order={order} key={order.id} /> )}
+            </div>
+
+            <OrderPrice purchaseValues={data.purchase_values} />
+
+            <OrderDescriptionWrapper title="Pickup · Toronto Central">
               <div className="flex justify-between items-center w-full">
                 <span>Pickup Date</span>
                 <h4>Monday, October 16, 2023</h4>
@@ -53,8 +72,8 @@ export default function Home() {
               <div className="flex flex-col w-full">
                 <span>Pickup Address</span>
                 <h4>
-                  Local Line, 500 King St. West Suite 305, Toronto ON M5V 1L9,
-                  CA <a>Map</a>
+                  {data?.fulfillment?.fulfillment_address}{" "}
+                  <a>Map</a>
                 </h4>
               </div>
 
@@ -65,16 +84,9 @@ export default function Home() {
                   to the third floor and enter the first door on your left.
                 </h4>
               </div>
-            </div>
-          </div>
+            </OrderDescriptionWrapper>
 
-          <div className="mt-4">
-            <div className="flex items-center gap-2">
-              <h4 className="whitespace-nowrap">Payment · Credit</h4>
-              <div className="h-px w-full bg-Grey1000" />
-            </div>
-
-            <div className="flex flex-col gap-3 px-2 py-2">
+            <OrderDescriptionWrapper title="Payment · Credit">
               <div className="flex justify-between items-center w-full">
                 <span>Card</span>
                 <h4>Visa **** 3245</h4>
@@ -82,7 +94,7 @@ export default function Home() {
 
               <div className="flex justify-between items-center w-full">
                 <span>Payment Due</span>
-                <h4>Wednesday, October 18, 2023</h4>
+                <h4>{moment(data.due_date).format("dddd, MMMM DD, YYYY")}</h4>
               </div>
 
               <div className="flex flex-col w-full">
@@ -93,55 +105,41 @@ export default function Home() {
                   so from the “Saved Cards” section of your account settings.
                 </h4>
               </div>
-            </div>
-          </div>
+            </OrderDescriptionWrapper>
 
-          <div className="mt-4">
-            <div className="flex items-center gap-2">
-              <h4 className="whitespace-nowrap">Order Notes</h4>
-              <div className="h-px w-full bg-Grey1000" />
-            </div>
-
-            <div className="flex flex-col gap-3 px-2 py-2">
+            <OrderDescriptionWrapper title="Order Notes">
               <div className="flex flex-col w-full">
                 <span>Checkout note from you</span>
 
-                <p>My Dearest Farmer,</p>
-                <br />
-                <p>
-                  In the quiet moments, I find myself yearning for the taste of
-                  your grapes, the richness of your tomatoes, the savor of your
-                  beef, and the subtle layers of your onions. Each harvest
-                  carries the echo of your presence, a reminder of a love that
-                  feels just out of reach. My heart aches for the day when we
-                  can share not only the fruits of your labor but the sweet
-                  symphony of our intertwined hearts.
-                </p>
-                <br />
-                <p>This order - sealed with a kiss,</p>
-                <p>Frontend Developer</p>
+                {data?.customer_note?.split("\n").map((word, i, arr) => (
+                  <div key={i}>
+                    <p>{word}</p>
+                    {arr.length - 1 !== i && <br />}
+                  </div>
+                ))}
               </div>
 
               <div>
                 <span>Note from Sunning Hill Farm</span>
                 <h4>Thank you for your order!</h4>
               </div>
-            </div>
-          </div>
+            </OrderDescriptionWrapper>
 
-          <div className="border border-Grey1000 border-dashed my-4" />
+            <hr className="border-dashed" />
 
-          <div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 mt-2">
               <span>Send another note</span>
 
               <textarea
                 className="min-h-32 border border-Grey300 rounded p-4"
-                defaultValue="np hahaha 🫵😻"
+                onChange={(e) => setNoteValue(e.target.value)}
               />
 
               <div className="flex justify-end">
-                <button className="h-8 w-24 border border-Grey300 rounded">
+                <button
+                  className="h-8 w-24 border border-Grey300 rounded"
+                  onClick={handleNoteSubmit}
+                >
                   Send note
                 </button>
               </div>
